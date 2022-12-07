@@ -11,8 +11,7 @@ steps:
   environment:
     ALPINE_VERSION: "latest"
   commands:
-  - podman build --build-arg ALPINE_VERSION=$ALPINE_VERSION --format docker --file Containerfile --format docker
---label revision="$(git rev-parse HEAD)" --label version="$(date +%Y.%m.%d)" --no-cache --tag blackhole:drone .
+  - podman build --build-arg ALPINE_VERSION=$ALPINE_VERSION --format docker --file Containerfile --format docker --label revision="$(git rev-parse HEAD)" --label version="$(date +%Y.%m.%d)" --no-cache --tag blackhole:drone .
 - name: publish
   environment:
     CONTAINER_NAME: "blackhole"
