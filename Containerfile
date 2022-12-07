@@ -47,12 +47,12 @@ RUN /bin/chown -R $USER:$USER /mnt/volumes/container \
 # ╭――――――――――――――――――――╮
 # │ APPLICATION        │
 # ╰――――――――――――――――――――╯
-RUN apk add --no-cache --update python3
+# RUN apk add --no-cache --update python3
 RUN apk add --no-cache py3-pip
 RUN pip install fastapi
 RUN pip install "uvicorn[standard]"
 COPY blackhole.py /home/blackhole/blackhole.py
-RUN chmod -R $USER:$USER /home/blackhole
+RUN chown -R $USER:$USER /home/blackhole
 
 # ╭――――――――――――――――――――╮
 # │ CONTAINER          │
