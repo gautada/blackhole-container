@@ -51,8 +51,8 @@ RUN apk add --no-cache --update python3
 RUN apk add --no-cache py3-pip
 RUN pip install fastapi
 RUN pip install "uvicorn[standard]"
-# COPY blackhole.py /home/blackhole/blackhole.py
-RUN ln -s /mnt/volumes/container/blackhole.py /home/blackhole/blackhole.py
+COPY blackhole.py /home/blackhole/blackhole.py
+RUN chmod -R $USER:$USER /home/blackhole
 
 # ╭――――――――――――――――――――╮
 # │ CONTAINER          │
