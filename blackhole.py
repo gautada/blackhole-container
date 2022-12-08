@@ -34,7 +34,7 @@ class html(BaseHTTPRequestHandler):
     def do_DEFAULT(self, verb):
         keys = self.headers.keys()
         for key in keys:
-            print("[H] %s: %s" % (key, self.headers.get("Host")), file=sys.stderr)
+            print("[H] %s: %s" % (key, self.headers.get(key)), file=sys.stderr)
             
         if TEST_PATH == self.path:
             self.send_response (200)
