@@ -21,7 +21,7 @@ if [ -z "$@" ] ; then
    log "-i" "entrypoint" "Blocking application - blackhole($(app_version))"
    # /usr/bin/uvicorn blackhole:app  --host 0.0.0.0  --port 8080 --reload
    cd /home/blackhole
-   /usr/bin/python3 blackhole.py
+   /usr/bin/python3 blackhole.py --domains blackhole.gautier.local,blackhole.gautier.org
   fi
   return 1
 else
@@ -29,7 +29,7 @@ else
  log "-i" "entrypoint" "Detatched application - blackhole($(app_version))"
  # /usr/bin/uvicorn blackhole:app --host 0.0.0.0 --port 8080 --reload >> /mnt/volumes/container/_log 2>&1 &
   cd /home/blackhole
- /usr/bin/python3 blackhole.py >> /mnt/volumes/container/_log 2>&1 &
+ /usr/bin/python3 blackhole.py --domains blackhole.gautier.local,blackhole.gautier.org >> /mnt/volumes/container/_log 2>&1 &
  return 0
 fi
 
