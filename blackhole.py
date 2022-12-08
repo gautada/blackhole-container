@@ -33,11 +33,11 @@ HEADER_HOST="Host"
 class html(BaseHTTPRequestHandler):
 
     def do_DEFAULT(self, verb):
+        print(file=sys.stderr)
         keys = self.headers.keys()
         for key in keys:
             print("[H] %s: %s" % (key, self.headers.get(key)), file=sys.stderr)
             
-        
         if (TEST_PATH == self.path) or (HEADER_HOST in keys and self.headers.get(HEADER_HOST) in TEST_DOMAINS):
             self.send_response (200)
             self.send_header ("Content-type", "text/html")
@@ -69,7 +69,7 @@ class html(BaseHTTPRequestHandler):
         self.end_headers ()
         if "HEAD" != verb:
             self.wfile.write(bytes("", "utf8"))
-        print(file=sys.stderr)
+        
 
     def log_message(self, format, *args):
         pass
