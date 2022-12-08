@@ -38,8 +38,9 @@ class html(BaseHTTPRequestHandler):
         for key in keys:
             print("%s: %s" % (key, self.headers.get("Host")))
             
+        print("GET", end=" ")
         if ("Host" in keys):
-            print("GET", self.headers.get("Host"), self.path)
+            print(self.headers.get("Host"), self.path)
         
         mime="text/html"
         if ("Accept" in keys):
@@ -63,4 +64,5 @@ class html(BaseHTTPRequestHandler):
     
 
 with HTTPServer (('0.0.0.0', 8080), html) as server:
+    print("Serving...")
     server.serve_forever ()
