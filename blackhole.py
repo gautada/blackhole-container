@@ -28,6 +28,7 @@ RESPONSE_HTML = """
 
 TEST_PATH="/blackhole/test"
 TEST_DOMAINS=[]
+HEADER_HOST="Host"
 
 class html(BaseHTTPRequestHandler):
 
@@ -36,13 +37,14 @@ class html(BaseHTTPRequestHandler):
         for key in keys:
             print("[H] %s: %s" % (key, self.headers.get(key)), file=sys.stderr)
             
-        if TEST_PATH == self.path:
+        
+        if (TEST_PATH == self.path) or (HEADER_HOST in keys and self.headers.get(HEADER_HOST) in TEST_DOMAINS):
             self.send_response (200)
             self.send_header ("Content-type", "text/html")
             self.send_header("Content-length", len(RESPONSE_HTML))
             self.end_headers ()
             self.wfile.write(bytes(RESPONSE_HTML, "utf8"))
-            print("Test: %s %s" % (verb, self.path))
+            print("Test: %s %s" % (verb, self.path), file=sys.stderr)
             return
             
         if ("Host" in keys):
@@ -67,17 +69,17 @@ class html(BaseHTTPRequestHandler):
         self.end_headers ()
         if "HEAD" != verb:
             self.wfile.write(bytes("", "utf8"))
-        print()
+        print(file=sys.stderr)
 
     def log_message(self, format, *args):
         pass
     
     def do_HEAD (self):
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNHANDLED HEAD")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNHANDLED HEAD", file=sys.stderr)
         self.do_DEFAULT("HEAD")
         
     def do_POST (self):
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNHANDLED POST")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UNHANDLED POST", file=sys.stderr)
         self.do_DEFAULT("POST")
         
     def do_GET (self):
@@ -95,14 +97,14 @@ if __name__ == "__main__":
         TEST_DOMAINS = args.domains.split(",")
         
     with HTTPServer ((args.host, int(args.port)), html) as server:
-        print("Blackhole Server listening: %s:%s" % (args.host, args.port))
-        print("Test domains:")
+        print("Blackhole Server listening: %s:%s" % (args.host, args.port), file=sys.stderr)
+        print("Test domains:", file=sys.stderr)
         for domain in TEST_DOMAINS:
-            print("- %s" % domain)
-        print("Test path: %s" % TEST_PATH)
-        print(" - - - - - - - - - - - - - - - - - - - - -")
+            print("- %s" % domain, file=sys.stderr)
+        print("Test path: %s" % TEST_PATH, file=sys.stderr)
+        print(" - - - - - - - - - - - - - - - - - - - - -", file=sys.stderr)
         try:
-            server.serve_forever ()
+            server.serve_forever()
         except KeyboardInterrupt:
-            print(" - - - - - - - - - - - - - - - - - - - - -")
-            print("Blackhole Server shutdown")
+            print(" - - - - - - - - - - - - - - - - - - - - -", file=sys.stderr)
+            print("Blackhole Server shutdown", file=sys.stderr)
