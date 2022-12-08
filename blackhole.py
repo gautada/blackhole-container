@@ -36,11 +36,11 @@ class html(BaseHTTPRequestHandler):
         keys = self.headers.keys()
         
         for key in keys:
-            print("%s: %s" % (key, self.headers.get("Host")))
+            print("%s: %s" % (key, self.headers.get("Host")), file=sys.stderr)
             
-        print("GET", end=" ")
+        print("GET", end=" ", file=sys.stderr)
         if ("Host" in keys):
-            print(self.headers.get("Host"), self.path)
+            print("%s: %s" % (self.headers.get("Host"), self.path), file=sys.stderr)
         
         mime="text/html"
         if ("Accept" in keys):
