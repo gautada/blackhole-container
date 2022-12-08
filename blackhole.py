@@ -55,7 +55,7 @@ class html(BaseHTTPRequestHandler):
         self.send_response (200)
         self.send_header ("Content-type", mime)
         self.send_header("Content-length", 0)
-        if encoding is None:
+        if encoding is not None:
             self.send_header("Content-Encoding", encoding)
             
         self.end_headers ()
