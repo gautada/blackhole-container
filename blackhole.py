@@ -165,7 +165,7 @@ class BlackHole(BaseHTTPRequestHandler):
         print(file=sys.stderr)
         keys = self.headers.keys()
         for key in keys:
-            logger.info("[H] %s: %s" % (key, self.headers.get(key)), file=sys.stderr)
+            logger.info("[H] %s: %s" % (key, self.headers.get(key)))
 
         host = ""
         if HEADER_HOST in keys:
