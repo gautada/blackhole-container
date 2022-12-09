@@ -48,9 +48,16 @@ RUN /bin/chown -R $USER:$USER /mnt/volumes/container \
 # │ APPLICATION        │
 # ╰――――――――――――――――――――╯
 # RUN apk add --no-cache --update python3
-RUN apk add --no-cache py3-pip
+RUN apk add --no-cache py3-pip py3-requests py3-yaml
 # RUN pip install fastapi
 # RUN pip install "uvicorn[standard]"
+
+RUN /bin/ln -fsv /mnt/volumes/container/block.list /etc/container/block.list \
+ && /bin/ln -fsv /mnt/volumes/container/white.list /etc/container/white.list \
+ && /bin/ln -fsv /mnt/volumes/container/black.list /etc/container/black.list \
+ && /bin/ln -fsv /mnt/volumes/container/hosts.yml /mnt/volumes/configmaps/hosts.yml \
+ && /bin/ln -fsv /mnt/volumes/configmaps/hosts.yml /etc/container/hosts.yml
+
 COPY blackhole.py /home/blackhole/blackhole.py
 RUN chown -R $USER:$USER /home/blackhole
 
