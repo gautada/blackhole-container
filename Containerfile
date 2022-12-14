@@ -32,7 +32,7 @@ RUN /usr/sbin/addgroup -g $GID $USER \
 # COPY wheel  /etc/container/wheel
 
 # BACKUP:
-# COPY backup /etc/container/backup
+COPY backup /etc/container/backup
 
 # ENTRYPOINT:
 RUN rm -v /etc/container/entrypoint
