@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# backup: Overrides the `container-backup()` function from the upstream container
+#         this file should be coppied to /etc/container/backup` via the 'Containerfile`.
+
+container_backup() {
+ /bin/cp /etc/container/hosts.yml ./
+ /bin/cp /etc/container/black.list ./
+ /bin/cp /etc/container/block.list ./
+ /bin/cp /etc/container/white.list ./
+}
+
